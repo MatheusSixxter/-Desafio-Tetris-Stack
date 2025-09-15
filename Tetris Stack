@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ALTURA 10
+#define LARGURA 5
+
+int main() {
+    char tabuleiro[ALTURA][LARGURA];
+    int i, j, coluna, linha;
+
+    // Inicializa o tabuleiro vazio
+    for (i = 0; i < ALTURA; i++) {
+        for (j = 0; j < LARGURA; j++) {
+            tabuleiro[i][j] = '.';
+        }
+    }
+
+    printf("=== TETRIS STACK SIMPLES ===\n");
+    printf("As pecas vao cair como blocos 1x1.\n");
+    printf("Voce escolhe a coluna (0 a %d) para soltar cada bloco.\n", LARGURA - 1);
+    printf("O jogo termina quando o topo estiver cheio.\n\n");
+
+    while (1) {
+        // Mostrar tabuleiro
+        for (i = 0; i < ALTURA; i++) {
+            for (j = 0; j < LARGURA; j++) {
+                printf("%c ", tabuleiro[i][j]);
+            }
+            printf("\n");
+        }
+
+        // Entrada do jogador
+        printf("\nEscolha a coluna: ");
+        scanf("%d", &coluna);
+
+        if (coluna < 0 || coluna >= LARGURA) {
+            printf("Coluna invalida!\n");
+            continue;
+        }
+
+        // Verifica onde o bloco vai cair
+        linha = ALTURA - 1;
+        while (linha >= 0 && tabuleiro[linha][coluna] == '.') {
+            linha--;
+        }
+
+        if (linha == -1) {
+            // Se chegou no topo, acaba o jogo
+            printf("\nGAME OVER! O tabuleiro encheu.\n");
+            break;
+        } else {
+            // Preenche logo acima da ultima ocupada
+            tabuleiro[linha + 1][coluna] = '#';
+        }
+    }
+
+    return 0;
+}
